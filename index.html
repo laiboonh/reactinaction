@@ -1,12 +1,68 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <link rel="stylesheet" href="/style/style.css">
-    <link rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/48938155eb24b4ccdde09426066869504c6dab3c/dist/css/bootstrap.min.css">
-    <script src="https://maps.googleapis.com/maps/api/js"></script>
-  </head>
-  <body>
-    <div class="container"></div>
-  </body>
-  <script src="/bundle.js"></script>
+<head>
+    <meta charset="utf-8">
+    <title>React In Action</title>
+</head>
+<body>
+
+<script src="https://unpkg.com/react@15/dist/react.js"></script>
+<script src="https://unpkg.com/react-dom@15/dist/react-dom.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.38/browser.min.js"></script>
+
+<div id="container"></div>
+<script type="text/babel">
+
+const Counter = React.createClass({
+    propTypes:{
+        incrementBy: React.PropTypes.number.isRequired,
+        counterStyle: React.PropTypes.shape({
+            color: React.PropTypes.string,
+            fontSize: React.PropTypes.number
+        }),
+    },
+    getDefaultProps: function() {
+        return {
+            incrementBy: 1
+        };
+    },
+    getInitialState: function() {
+        return {
+            count:0
+        }
+    },
+    onButtonClick: function () {
+        this.setState(function(previousState, currentProps){
+            return {count: previousState.count + currentProps.incrementBy};
+        });
+    },
+    render: function() {
+        return (
+            <Display count={this.state.count} onClick={this.onButtonClick} />
+        )
+    }
+})
+
+const Display = (props) => <div><h1>{props.count}</h1><button onClick={props.onClick}>+</button></div>;
+Display.propTypes = {
+    count: React.PropTypes.number.isRequired,
+    onClick: React.PropTypes.func.isRequired
+};
+Display.defaultProps = {
+    count: 0
+};
+
+ReactDOM.render(
+    <Counter/>,
+    document.getElementById('container')
+);
+
+
+
+
+
+
+
+</script>
+</body>
 </html>
