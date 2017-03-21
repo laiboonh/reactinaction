@@ -13,47 +13,43 @@
 <div id="container"></div>
 <script type="text/babel">
 
-const Counter = React.createClass({
-    propTypes:{
-        incrementBy: React.PropTypes.number.isRequired,
-        counterStyle: React.PropTypes.shape({
-            color: React.PropTypes.string,
-            fontSize: React.PropTypes.number
-        }),
+const ChildComponent = React.createClass({
+    propTypes: {
+        name: React.PropTypes.string.isRequired,
     },
-    getDefaultProps: function() {
-        return {
-            incrementBy: 1
-        };
+    render: function(){
+        console.log('ChildComponent: render');
+        return (
+            <div>
+                Props:{this.props.name}
+            </div>
+        );
+    },
+});
+
+const ParentComponent = React.createClass({
+    onInputChange: function(event) {
+        this.setState({text: event.target.value});
     },
     getInitialState: function() {
         return {
-            count:0
+            text:""
         }
     },
-    onButtonClick: function () {
-        this.setState(function(previousState, currentProps){
-            return {count: previousState.count + currentProps.incrementBy};
-        });
-    },
     render: function() {
+        console.log('ParentComponent: render');
         return (
-            <Display count={this.state.count} onClick={this.onButtonClick} />
-        )
-    }
-})
+            <div className="container">
+                <h2>Learn about rendering and lifecycle methods!</h2>
+                <input value={this.state.text} onChange={this.onInputChange}/>
+                <ChildComponent name={this.state.text} />
+            </div>
+        );
+    },
+});
 
-const Display = (props) => <div><h1>{props.count}</h1><button onClick={props.onClick}>+</button></div>;
-Display.propTypes = {
-    count: React.PropTypes.number.isRequired,
-    onClick: React.PropTypes.func.isRequired
-};
-Display.defaultProps = {
-    count: 0
-};
-
-ReactDOM.render(
-    <Counter/>,
+ReactDOM.render (
+    <ParentComponent/>,
     document.getElementById('container')
 );
 
