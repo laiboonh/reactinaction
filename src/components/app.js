@@ -1,9 +1,29 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-export default class App extends Component {
-  render() {
-    return (
-      <div>React simple starter</div>
-    );
-  }
-}
+var App = React.createClass({
+    getInitialState: function(){
+        return {
+            posts: {
+                all: [],
+                filtered: [],
+            },
+            category: null,
+            filters: {
+                image: null,
+                link: null,
+                categories: [],
+            },
+            loaded: false,
+            showBanner: false,
+        };
+    },
+    render: function(){
+        return (
+            <div className="app">
+                Letters Social — coming soon!!!
+            </div>
+        );
+    },
+});
+
+module.exports = App;

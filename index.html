@@ -5,60 +5,7 @@
     <title>React In Action</title>
 </head>
 <body>
-
-<script src="https://unpkg.com/react@15/dist/react.js"></script>
-<script src="https://unpkg.com/react-dom@15/dist/react-dom.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.38/browser.min.js"></script>
-
 <div id="container"></div>
-<script type="text/babel">
-
-const ChildComponent = React.createClass({
-    propTypes: {
-        name: React.PropTypes.string.isRequired,
-    },
-    render: function(){
-        console.log('ChildComponent: render');
-        return (
-            <div>
-                Props:{this.props.name}
-            </div>
-        );
-    },
-});
-
-const ParentComponent = React.createClass({
-    onInputChange: function(event) {
-        this.setState({text: event.target.value});
-    },
-    getInitialState: function() {
-        return {
-            text:""
-        }
-    },
-    render: function() {
-        console.log('ParentComponent: render');
-        return (
-            <div className="container">
-                <h2>Learn about rendering and lifecycle methods!</h2>
-                <input value={this.state.text} onChange={this.onInputChange}/>
-                <ChildComponent name={this.state.text} />
-            </div>
-        );
-    },
-});
-
-ReactDOM.render (
-    <ParentComponent/>,
-    document.getElementById('container')
-);
-
-
-
-
-
-
-
-</script>
+<script src="/bundle.js"></script>
 </body>
 </html>
