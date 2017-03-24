@@ -1,12 +1,12 @@
 import React from 'react';
+import Post from './post';
+import CreatePost from './post/CreatePostStateless';
 
-var App = React.createClass({
-    getInitialState: function(){
-        return {
-            posts: {
-                all: [],
-                filtered: [],
-            },
+export default class App extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            posts: [],
             category: null,
             filters: {
                 image: null,
@@ -16,14 +16,22 @@ var App = React.createClass({
             loaded: false,
             showBanner: false,
         };
-    },
-    render: function(){
+    }
+
+    componentDidMount() {
+        this.setState({
+            posts: [{id: 1, author: 'Lai Boon Hui', content: 'This is my 1st post'}],
+            loaded: true
+        });
+    }
+
+    render() {
         return (
             <div className="app">
-                Letters Social — coming soon!!!
+                <CreatePost/>
+                {this.state.loaded ? this.state.posts.map(post => <Post key={post.id} post={post}/>) :
+                    <div>not loaded</div>}
             </div>
         );
-    },
-});
-
-module.exports = App;
+    }
+}
