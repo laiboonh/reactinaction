@@ -1,6 +1,6 @@
 import React from 'react';
 import Post from './post';
-import CreatePost from './post/CreatePostStateless';
+import CreatePost from './post/CreatePost';
 
 export default class App extends React.Component {
     constructor() {
@@ -16,6 +16,23 @@ export default class App extends React.Component {
             loaded: false,
             showBanner: false,
         };
+        this.handlePostSubmit = this.handlePostSubmit.bind(this);
+    }
+
+    handlePostSubmit(payload) {
+        console.log(payload);
+        // Disable empty posts
+        if (!payload.content) {
+            return;
+        }
+
+        // Update the local posts state optimistically
+        const oldPosts = this.state.posts;
+        oldPosts.unshift(payload);
+
+        this.setState({
+            posts: oldPosts
+        });
     }
 
     componentDidMount() {
@@ -28,7 +45,7 @@ export default class App extends React.Component {
     render() {
         return (
             <div className="app">
-                <CreatePost/>
+                <CreatePost onSubmit={this.handlePostSubmit}/>
                 {this.state.loaded ? this.state.posts.map(post => <Post key={post.id} post={post}/>) :
                     <div>not loaded</div>}
             </div>
